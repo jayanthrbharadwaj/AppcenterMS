@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/list_border_drawable"
+
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/fileId"
+        android:text="FileId"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/barrier"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/fileName"
+        android:text="FileName"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:paddingTop="4dp"
+        android:textSize="18sp"
+        android:gravity="left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/fileId"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/versionCode"
+        android:text="App Name"
+        android:gravity="left"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintRight_toLeftOf="@+id/barrier"
+        android:paddingTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fileName"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/dateName"
+        android:text="date"
+        android:textSize="13sp"
+        android:textColor="@android:color/black"
+        android:gravity="left"
+        android:paddingTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/versionCode"
+        app:layout_constraintRight_toLeftOf="@+id/barrier"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/appName"
+        android:text="Version code"
+        android:textSize="13sp"
+        android:textColor="@android:color/black"
+        android:gravity="left"
+        android:paddingTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/dateName"
+        app:layout_constraintRight_toLeftOf="@+id/barrier"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        app:layout_constraintGuide_end="60dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/installApk"
+        android:src="@drawable/ic_baseline_sports_tennis_24"
+        android:layout_width="wrap_content"
+        android:alpha="0.8"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/deleteBtn"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="15dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/installApk" />
+
+    <ImageView
+        android:id="@+id/shareBtn"
+        android:src="@drawable/ic_share_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="15dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
