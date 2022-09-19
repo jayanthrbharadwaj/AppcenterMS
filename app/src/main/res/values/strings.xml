@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AppCenterMS Builds</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Downloads</string>
+    <string name="shared_prefs_store">DownloadsStore</string>
+    <string name="rationale_write">This app needs access to your Downloads to write and read App center APK.</string>
+
+    <string name="title_notifications">Notifications</string>
+</resources>
