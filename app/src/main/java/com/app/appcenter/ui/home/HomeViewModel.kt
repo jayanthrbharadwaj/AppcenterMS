@@ -1,16 +1,18 @@
 package com.app.appcenter.ui.home
 
+import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Environment
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.appcenter.R
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

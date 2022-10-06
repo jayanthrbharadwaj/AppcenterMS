@@ -1,0 +1,67 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+namespace shared {
+    namespace domain {
+        class ApkSaveInteractor {
+            Inject ApkSaveHomeRepositoryContract
+            - saveApk(apkModel: ApkModel)
+            - reDownloadApk(): Int
+            - getPaginatedApkList(size): List<ApkModel>
+            - searchApkList(searchTerm): List<ApkModel>
+            - filterApkList(filterTerm): List<ApkModel>
+            - deleteApk(apkId): Int
+        }
+     }
+    namespace model {
+        namespace repository {
+            class ApkSaveRepository {
+                Inject ApkSaveStorage
+                - saveApk(apkModel: ApkModel)
+                - reDownloadApk(): Int
+                - getPaginatedApkList(size): List<ApkModel>
+                - searchApkList(searchTerm): List<ApkModel>
+                - filterApkList(filterTerm): List<ApkModel>
+                - deleteApk(apkId): Int
+         }
+    }
+
+        class ApkModel {
+            apkFilePath: String,
+            apkSize: String,
+            apkUrl: String,
+            apkVersion: String,
+            apkUrlLocation: String,
+            apkDownloadStatus: APKAvaialability
+        }
+        enum APKAvaialability{
+            DOWNLOADING, DOWNLOADED, DOWNLOAD_FAILURE, DELETED, RE_TRY_CLICKED
+        }
+        interface HomeViewModelContract
+
+        class DownloadsViewModel {
+            Inject ApkSaveInteractorContract
+                - reDownloadApk(): Int
+                - getPaginatedApkList(size): List<ApkModel>
+                - searchApkList(searchTerm): List<ApkModel>
+                - filterApkList(filterTerm): List<ApkModel>
+                - deleteApk(apkId): Int
+        }
+    }
+}
+
+namespace shared {
+    namespace domain {
+        class ApkSaveInteractor
+        interface ApkSaveInteractorContract
+    }
+}
+
+UI.view.HomeFragment *-- UI.viewmodel.HomeViewModelContract
+UI.view.DownloadsFragment *-- UI.viewmodel.DownloadsViewModelContract
+UI.viewmodel.HomeViewModelContract o-- UI.viewmodel.HomeViewModel
+UI.viewmodel.DownloadsViewModelContract o-- UI.viewmodel.DownloadsViewModel
+UI.viewmodel.HomeViewModel *-- shared.domain.ApkSaveInteractorContract
+UI.viewmodel.DownloadsViewModel *-- shared.domain.ApkSaveInteractorContract
+shared.domain.ApkSaveInteractorContract o-- shared.domain.ApkSaveInteractor
+@enduml

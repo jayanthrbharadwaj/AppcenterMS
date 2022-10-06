@@ -15,9 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.appcenter.R
 import com.app.appcenter.databinding.FragmentHomeBinding
 import com.app.appcenter.ui.home.listeners.DownloadClickListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.reflect.Method
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(), DownloadClickListener {
 
     private lateinit var homeViewModel: HomeViewModel

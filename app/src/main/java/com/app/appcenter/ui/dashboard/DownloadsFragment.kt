@@ -15,7 +15,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.app.appcenter.MainActivity
+import com.app.appcenter.ui.MainActivity
 import com.app.appcenter.R
 import com.app.appcenter.databinding.FragmentDashboardBinding
 import com.app.appcenter.ui.dashboard.adapter.FileMeta
@@ -23,7 +23,6 @@ import com.app.appcenter.ui.dashboard.adapter.FileViewerAdapter
 import com.app.appcenter.ui.dashboard.interfaces.DownloadFileClickListener
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
-import java.util.*
 
 
 class DownloadsFragment : Fragment(), DownloadFileClickListener {

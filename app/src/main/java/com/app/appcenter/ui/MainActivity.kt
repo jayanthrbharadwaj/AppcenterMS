@@ -1,4 +1,4 @@
-package com.app.appcenter
+package com.app.appcenter.ui
 
 import android.Manifest
 import android.os.Bundle
@@ -7,18 +7,19 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.app.appcenter.R
 import com.app.appcenter.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 EasyPermissions.RationaleCallbacks{
 
     lateinit var binding: ActivityMainBinding
     private val RC_LOCATION_CONTACTS_PERM = 124
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,7 @@ EasyPermissions.RationaleCallbacks{
     }
 
     override fun onRationaleAccepted(requestCode: Int) {
-
+        // Continue
     }
 
     override fun onRationaleDenied(requestCode: Int) {

@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+namespace UI {
+    namespace view {
+        class HomeFragment {
+            Inject HomeViewModelContract
+        }
+        class DownloadsFragment {
+            Inject DownloadsViewModelContract
+        }
+     }
+    namespace viewmodel {
+        class HomeViewModel {
+            Inject ApkSaveInteractorContract
+            - saveApk(apkModel: ApkModel)
+        }
+        class ApkItem {
+            apkFilePath: String,
+            apkSize: String,
+            apkUrl: String,
+            apkVersion: String,
+            apkUrlLocation: String,
+            apkDownloadStatus: APKAvaialability
+        }
+        enum APKAvaialability{
+            DOWNLOADING, DOWNLOADED, DOWNLOAD_FAILURE, DELETED, RE_TRY_CLICKED
+        }
+        interface HomeViewModelContract
+
+        class DownloadsViewModel {
+            Inject ApkSaveInteractorContract
+                - reDownloadApk(): Int
+                - getPaginatedApkList(size): List<ApkItem>
+                - searchApkList(searchTerm): List<ApkItem>
+                - filterApkList(filterTerm): List<ApkItem>
+                - deleteApk(apkId): Int
+        }
+    }
+}
+
+namespace shared {
+    namespace domain {
+        class ApkSaveInteractor
+        interface ApkSaveInteractorContract
+    }
+}
+
+UI.view.HomeFragment *-- UI.viewmodel.HomeViewModelContract
+UI.view.DownloadsFragment *-- UI.viewmodel.DownloadsViewModelContract
+UI.viewmodel.HomeViewModelContract o-- UI.viewmodel.HomeViewModel
+UI.viewmodel.DownloadsViewModelContract o-- UI.viewmodel.DownloadsViewModel
+UI.viewmodel.HomeViewModel *-- shared.domain.ApkSaveInteractorContract
+UI.viewmodel.DownloadsViewModel *-- shared.domain.ApkSaveInteractorContract
+shared.domain.ApkSaveInteractorContract o-- shared.domain.ApkSaveInteractor
+@enduml
