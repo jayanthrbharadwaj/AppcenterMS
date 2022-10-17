@@ -9,6 +9,8 @@ import android.content.pm.ResolveInfo
 import android.os.Environment
 import androidx.lifecycle.*
 import com.app.appcenter.ui.dashboard.adapter.FileMeta
+import com.app.appcenter.ui.util.DOWNLOADS_STORE_KEY
+import com.app.appcenter.ui.util.DOWNLOADS_STORE_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -99,19 +101,19 @@ class DownloadsViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun getFileList(): List<File> {
         val sharedPref: SharedPreferences = getApplication<Application>().getSharedPreferences(
-           "DownloadsStore", Context.MODE_PRIVATE
+            DOWNLOADS_STORE_NAME, Context.MODE_PRIVATE
         )
-        val jsonKey = "jaiHanumanta"
+
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val subDir =
-            File(directory.absolutePath.plus("/").plus(sharedPref.getString(jsonKey, null)))
-        val yuk = subDir.listFiles()
-        return if(!yuk.isNullOrEmpty()) {
-            Arrays.sort(yuk) { f1, f2 ->
+            File(directory.absolutePath.plus("/").plus(sharedPref.getString(DOWNLOADS_STORE_KEY, null)))
+        val filesInSubdirectory = subDir.listFiles()
+        return if(!filesInSubdirectory.isNullOrEmpty()) {
+            Arrays.sort(filesInSubdirectory) { f1, f2 ->
                 java.lang.Long.valueOf(f1.lastModified()).compareTo(f2.lastModified())
             }
-            yuk.asList()
+            filesInSubdirectory.asList()
         } else emptyList()
     }
 }

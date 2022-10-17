@@ -8,7 +8,8 @@ import com.app.appcenter.databinding.FragmentHomeBinding
 
 
 internal class AppCenterWebViewClient(private val context: HomeFragment,
-                                      private val _binding: FragmentHomeBinding): WebViewClient() {
+                                      private val _binding: FragmentHomeBinding,
+                                      private val homeViewModel: HomeViewModel): WebViewClient() {
 
     override fun shouldOverrideUrlLoading(webView: WebView, request: WebResourceRequest ): Boolean {
         super.shouldOverrideUrlLoading(webView, request)
@@ -33,16 +34,10 @@ internal class AppCenterWebViewClient(private val context: HomeFragment,
         _binding.spinKit.visibility = View.GONE
     }
 
-    override fun onPageCommitVisible(view: WebView?, url: String?) {
-        super.onPageCommitVisible(view, url)
+    override fun onLoadResource(view: WebView?, url: String?) {
+        super.onLoadResource(view, url)
+        url?.let{ homeViewModel.writeApkFolderNamesToPrefs(it) }
     }
 
-    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-        super.onReceivedError(view, request, error)
-    }
-
-    override fun onReceivedHttpAuthRequest(view: WebView?, handler: HttpAuthHandler?, host: String?, realm: String?) {
-        super.onReceivedHttpAuthRequest(view, handler, host, realm)
-    }
 
 }

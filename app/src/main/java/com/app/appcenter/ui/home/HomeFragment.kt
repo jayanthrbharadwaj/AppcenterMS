@@ -3,6 +3,7 @@ package com.app.appcenter.ui.home
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.appcenter.R
 import com.app.appcenter.databinding.FragmentHomeBinding
 import com.app.appcenter.ui.home.listeners.DownloadClickListener
+import com.app.appcenter.ui.util.DOWNLOADS_STORE_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.reflect.Method
 
@@ -29,12 +31,12 @@ class HomeFragment : Fragment(), DownloadClickListener {
     private val binding get() = _binding!!
     private val SEARCH_MENU_ID = Menu.FIRST
 
-    var sharedPref: SharedPreferences? = null
+    lateinit var sharedPref: SharedPreferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPref = context?.getSharedPreferences(
-            context?.getString(R.string.shared_prefs_store), Context.MODE_PRIVATE)
+        sharedPref = requireContext().getSharedPreferences(
+            DOWNLOADS_STORE_NAME, Context.MODE_PRIVATE)
 
     }
 
@@ -49,7 +51,10 @@ class HomeFragment : Fragment(), DownloadClickListener {
         val root: View = binding.root
         setHasOptionsMenu(true)
         val holWebView: WebView = binding.holWebView
-        holWebView.webViewClient = AppCenterWebViewClient(this, binding)
+        holWebView.webViewClient = AppCenterWebViewClient(this, binding, homeViewModel)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
         holWebView.settings.apply {
             domStorageEnabled = true
             javaScriptEnabled = true
@@ -59,7 +64,7 @@ class HomeFragment : Fragment(), DownloadClickListener {
         }
         holWebView.setBackgroundColor(Color.parseColor("#f8f8f8"));
 
-        val url = "https://appcenter.ms/apps"
+        val url = "https://install.appcenter.ms/apps"
         holWebView.loadUrl(url)
         return root
     }
@@ -122,7 +127,11 @@ class HomeFragment : Fragment(), DownloadClickListener {
         _binding = null
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+    }
+
     override fun onDownloadStart(downloadPath: String) {
-        homeViewModel.startDownload(downloadPath, sharedPref, requireContext())
+        homeViewModel.startDownload(downloadPath, requireContext())
     }
 }

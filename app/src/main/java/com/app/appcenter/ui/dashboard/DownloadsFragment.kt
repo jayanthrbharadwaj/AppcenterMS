@@ -49,32 +49,6 @@ class DownloadsFragment : Fragment(), DownloadFileClickListener {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        downloadsViewModel.callLoadMeta().observe(viewLifecycleOwner) {
-            if (it.isNullOrEmpty()) {
-                binding.apply {
-                    emptyList.visibility = View.VISIBLE
-                    fileListing.visibility = View.GONE
-                    gotoHome.setOnClickListener {
-                        (activity as MainActivity).findNavController(R.id.nav_host_fragment_activity_main)
-                            .navigateUp()
-                    }
-                }
-
-            } else {
-                binding.emptyList.visibility = View.GONE
-                binding.fileListing.apply {
-                    addItemDecoration(getDivider())
-                    adapter = FileViewerAdapter(this@DownloadsFragment, it)
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                }
-            }
-
-        }
-    }
-
     private fun getDivider(): DividerItemDecoration {
         val itemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -85,6 +59,33 @@ class DownloadsFragment : Fragment(), DownloadFileClickListener {
         return itemDecoration
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            downloadsViewModel.callLoadMeta().observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.apply {
+                        emptyList.visibility = View.VISIBLE
+                        fileListing.visibility = View.GONE
+                        gotoHome.setOnClickListener {
+                            (activity as MainActivity).findNavController(R.id.nav_host_fragment_activity_main)
+                                .navigateUp()
+                        }
+                    }
+
+                } else {
+                    binding.emptyList.visibility = View.GONE
+                    binding.fileListing.apply {
+                        addItemDecoration(getDivider())
+                        adapter = FileViewerAdapter(this@DownloadsFragment, it)
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                    }
+                }
+
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -103,7 +104,6 @@ class DownloadsFragment : Fragment(), DownloadFileClickListener {
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         startActivity(intent)
-
 
     }
 
